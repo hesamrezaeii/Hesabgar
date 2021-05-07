@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: hesabgar
+      port: 27017
+      host: localhost
