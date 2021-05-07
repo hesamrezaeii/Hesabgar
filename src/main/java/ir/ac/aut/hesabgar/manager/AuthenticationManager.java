@@ -163,3 +163,4 @@ public class AuthenticationManager {
 
         return userInfoRepo.save(userInfo);
     }
+}
