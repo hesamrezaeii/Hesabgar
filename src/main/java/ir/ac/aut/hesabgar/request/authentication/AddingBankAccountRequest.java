@@ -1,14 +1,17 @@
-package ir.ac.aut.hesabgar.domain.data;
+package ir.ac.aut.hesabgar.request.authentication;
 
-public class BankAccount {
+public class AddingBankAccountRequest {
+    private String userId;
     private String bankName;
     private String bankAccountNumber;
     private String atmCardNumber;
 
-    public BankAccount(String bankName, String bankAccountNumber, String atmCardNumber) {
-        this.bankName = bankName;
-        this.bankAccountNumber = bankAccountNumber;
-        this.atmCardNumber = atmCardNumber;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getBankName() {

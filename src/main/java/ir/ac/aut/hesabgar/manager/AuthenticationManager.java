@@ -1,12 +1,11 @@
 package ir.ac.aut.hesabgar.manager;
 
+import ir.ac.aut.hesabgar.domain.data.BankAccount;
 import ir.ac.aut.hesabgar.domain.data.JoinedGroupInfo;
 import ir.ac.aut.hesabgar.domain.document.UserInfo;
 import ir.ac.aut.hesabgar.domain.repo.UserInfoRepo;
-import ir.ac.aut.hesabgar.request.authentication.AddFriendRequest;
-import ir.ac.aut.hesabgar.request.authentication.ChangeProfileRequest;
-import ir.ac.aut.hesabgar.request.authentication.LoginInfoRequest;
-import ir.ac.aut.hesabgar.request.authentication.RegisterInfoRequest;
+import ir.ac.aut.hesabgar.request.authentication.*;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -80,7 +79,7 @@ public class AuthenticationManager {
     }
 
     public UserInfo changeProfile(ChangeProfileRequest changeProfileRequest) {
-        UserInfo userInfo = userInfoRepo.getUserInfoByUserName(changeProfileRequest.getUserId());
+        UserInfo userInfo = userInfoRepo.getUserInfoById(changeProfileRequest.getUserId());
         if (!changeProfileRequest.getName().equals("")) {
             userInfo.setName(changeProfileRequest.getName());
         }
@@ -110,19 +109,57 @@ public class AuthenticationManager {
                 if (newFriend == null) {
                     return null;
                 } else {
+                    List<String> newFriendFriendsList = newFriend.getFriendsList();
+                    if (newFriendFriendsList == null) {
+                        newFriendFriendsList = new ArrayList<>();
+                    }
+                    newFriendFriendsList.add(userInfo.getId());
+                    newFriend.setFriendsList(newFriendFriendsList);
+                    userInfoRepo.save(newFriend);
+
                     friends.add(newFriend.getId());
                     userInfo.setFriendsList(friends);
-                    return userInfo;
+                    return userInfoRepo.save(userInfo);
                 }
             } else {
+
+                List<String> newFriendFriendsList = newFriend.getFriendsList();
+                if (newFriendFriendsList == null) {
+                    newFriendFriendsList = new ArrayList<>();
+                }
+                newFriendFriendsList.add(userInfo.getId());
+                newFriend.setFriendsList(newFriendFriendsList);
+                userInfoRepo.save(newFriend);
+
                 friends.add(newFriend.getId());
                 userInfo.setFriendsList(friends);
-                return userInfo;
+                return userInfoRepo.save(userInfo);
             }
         } else {
+
+            List<String> newFriendFriendsList = newFriend.getFriendsList();
+            if (newFriendFriendsList == null) {
+                newFriendFriendsList = new ArrayList<>();
+            }
+            newFriendFriendsList.add(userInfo.getId());
+            newFriend.setFriendsList(newFriendFriendsList);
+            userInfoRepo.save(newFriend);
+
+
             friends.add(newFriend.getId());
             userInfo.setFriendsList(friends);
-            return userInfo;
+            return userInfoRepo.save(userInfo);
         }
     }
-}
+
+    public UserInfo addingBankAccount(AddingBankAccountRequest addingBankAccountRequest) {
+        UserInfo userInfo = userInfoRepo.getUserInfoById(addingBankAccountRequest.getUserId());
+        List<BankAccount> bankAccounts = userInfo.getBankAccounts();
+        if (bankAccounts == null) {
+            bankAccounts = new ArrayList<>();
+        }
+        bankAccounts.add(new BankAccount(addingBankAccountRequest.getBankName(), addingBankAccountRequest.getBankAccountNumber(), addingBankAccountRequest.getAtmCardNumber()));
+        userInfo.setBankAccounts(bankAccounts);
+
+        return userInfoRepo.save(userInfo);
+    }

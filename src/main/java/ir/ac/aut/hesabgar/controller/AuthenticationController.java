@@ -3,10 +3,7 @@ package ir.ac.aut.hesabgar.controller;
 import ir.ac.aut.hesabgar.domain.document.UserInfo;
 import ir.ac.aut.hesabgar.domain.repo.UserInfoRepo;
 import ir.ac.aut.hesabgar.manager.AuthenticationManager;
-import ir.ac.aut.hesabgar.request.authentication.AddFriendRequest;
-import ir.ac.aut.hesabgar.request.authentication.ChangeProfileRequest;
-import ir.ac.aut.hesabgar.request.authentication.LoginInfoRequest;
-import ir.ac.aut.hesabgar.request.authentication.RegisterInfoRequest;
+import ir.ac.aut.hesabgar.request.authentication.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +36,11 @@ public class AuthenticationController {
     @PostMapping("/addFriend")
     public UserInfo addFriend(@RequestBody AddFriendRequest addFriendRequest) {
         return authenticationManager.addFriend(addFriendRequest);
+    }
+
+    @PostMapping("/addBankAccount")
+    public UserInfo addingBankAccount(@RequestBody AddingBankAccountRequest addingBankAccountRequest) {
+        return authenticationManager.addingBankAccount(addingBankAccountRequest);
     }
 
 
