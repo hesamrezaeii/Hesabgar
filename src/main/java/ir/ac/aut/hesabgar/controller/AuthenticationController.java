@@ -5,12 +5,15 @@ import ir.ac.aut.hesabgar.domain.repo.UserInfoRepo;
 import ir.ac.aut.hesabgar.manager.AuthenticationManager;
 import ir.ac.aut.hesabgar.request.authentication.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/authentication")
+@CrossOrigin
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -43,6 +46,14 @@ public class AuthenticationController {
         return authenticationManager.addingBankAccount(addingBankAccountRequest);
     }
 
+    @PostMapping("/getUser")
+    public ResponseEntity<Object> getUser(@RequestBody GetUserRequest getUserRequest) {
+       UserInfo userInfo =  userInfoRepo.getUserInfoById(getUserRequest.getUserId());
+       if(userInfo != null){
+           return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+       } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+    }
 
     @GetMapping("/getAll")
     public List<UserInfo> getAll() {
