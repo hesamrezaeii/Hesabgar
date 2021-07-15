@@ -34,7 +34,7 @@ public class AuthenticationController {
         UserInfo userInfo =  authenticationManager.login(loginInfoRequest);
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-\        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/changeProfile")
@@ -42,7 +42,6 @@ public class AuthenticationController {
         UserInfo userInfo = authenticationManager.changeProfile(changeProfileRequest);
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-            userInfo = null;
 
         } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
@@ -52,7 +51,6 @@ public class AuthenticationController {
         UserInfo userInfo = authenticationManager.addFriend(addFriendRequest);
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-            userInfo = null;
 
         } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
@@ -62,7 +60,6 @@ public class AuthenticationController {
         UserInfo userInfo = authenticationManager.addingBankAccount(addingBankAccountRequest);
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-            userInfo = null;
 
         } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
@@ -72,7 +69,6 @@ public class AuthenticationController {
        UserInfo userInfo =  userInfoRepo.getUserInfoById(getUserRequest.getUserId());
        if(userInfo != null){
            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-           userInfo = null;
 
        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
