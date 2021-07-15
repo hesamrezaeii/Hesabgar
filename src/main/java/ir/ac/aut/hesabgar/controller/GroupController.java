@@ -5,6 +5,8 @@ import ir.ac.aut.hesabgar.domain.repo.GroupInfoRepo;
 import ir.ac.aut.hesabgar.manager.GroupManager;
 import ir.ac.aut.hesabgar.request.group.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,33 +20,51 @@ public class GroupController {
 
 
     @PostMapping("/createGroup")
-    public GroupInfo createGroup(@RequestBody CreatingGroupRequest creatingGroupInfoRequest) {
-        return groupManager.createGroup(creatingGroupInfoRequest);
+    public ResponseEntity<Object> createGroup(@RequestBody CreatingGroupRequest creatingGroupInfoRequest) {
+        GroupInfo groupInfo = groupManager.createGroup(creatingGroupInfoRequest);
+        if(groupInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(groupInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @GetMapping("/getGroup/{groupId}")
-    public GroupInfo getGroup(@PathVariable String groupId){
-       return groupInfoRepo.getGroupInfoById(groupId);
+    public ResponseEntity<Object> getGroup(@PathVariable String groupId){
+        GroupInfo groupInfo = groupInfoRepo.getGroupInfoById(groupId);
+        if(groupInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(groupInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/inviteToGroup")
-    public GroupInfo inviteGroup(@RequestBody InvitingToGroupRequest invitingToGroupInfoRequest) {
-        return groupManager.inviteToGroup(invitingToGroupInfoRequest);
+    public ResponseEntity<Object> inviteGroup(@RequestBody InvitingToGroupRequest invitingToGroupInfoRequest) {
+        GroupInfo groupInfo = groupManager.inviteToGroup(invitingToGroupInfoRequest);
+        if(groupInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(groupInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/deleteGroup")
-    public String deleteGroup(@RequestBody DeletingGroupRequest deletingGroupRequest) {
-        return groupManager.deletingGroup(deletingGroupRequest);
+    public ResponseEntity<Object> deleteGroup(@RequestBody DeletingGroupRequest deletingGroupRequest) {
+        String groupInfo = groupManager.deletingGroup(deletingGroupRequest);
+        if(!groupInfo.equals("\"SUCCESSFULLY DELETED\"")){
+            return ResponseEntity.status(HttpStatus.OK).body(groupInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/makingNewInvoiceAdmin")
-    public GroupInfo makingMemberInvoiceAdmin(@RequestBody MakingMemberInvoiceAdminRequest makingMemberInvoiceAdminRequest) {
-        return groupManager.makingMemberInvoiceAdmin(makingMemberInvoiceAdminRequest, true);
+    public ResponseEntity<Object> makingMemberInvoiceAdmin(@RequestBody MakingMemberInvoiceAdminRequest makingMemberInvoiceAdminRequest) {
+        GroupInfo groupInfo = groupManager.makingMemberInvoiceAdmin(makingMemberInvoiceAdminRequest, true);
+        if(groupInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(groupInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/dismissalInvoiceAdmin")
-    public GroupInfo DismissalMemberFromInvoiceAdmin(@RequestBody MakingMemberInvoiceAdminRequest dismissalMemberInvoiceAdminRequest) {
-        return groupManager.makingMemberInvoiceAdmin(dismissalMemberInvoiceAdminRequest, false);
+    public ResponseEntity<Object> DismissalMemberFromInvoiceAdmin(@RequestBody MakingMemberInvoiceAdminRequest dismissalMemberInvoiceAdminRequest) {
+        GroupInfo groupInfo = groupManager.makingMemberInvoiceAdmin(dismissalMemberInvoiceAdminRequest, false);
+        if(groupInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(groupInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @DeleteMapping("/deleteAll")
@@ -58,8 +78,11 @@ public class GroupController {
     }
 
     @PostMapping("/addInvoice")
-    public GroupInfo getPaymentTerm(@RequestBody AddingInvoiceRequest addingInvoiceRequest) {
-        return groupManager.addingInvoice(addingInvoiceRequest);
+    public ResponseEntity<Object> getPaymentTerm(@RequestBody AddingInvoiceRequest addingInvoiceRequest) {
+        GroupInfo groupInfo = groupManager.addingInvoice(addingInvoiceRequest);
+        if(groupInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(groupInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
 

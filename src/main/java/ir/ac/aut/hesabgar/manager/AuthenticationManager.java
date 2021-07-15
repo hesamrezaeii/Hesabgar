@@ -22,8 +22,6 @@ public class AuthenticationManager {
         UserInfo userInfo = userInfoRepo.getUserInfoByUserName(registerInfoRequest.getUserName());
         if (userInfo == null) {
             userInfo = userInfoRepo.getUserInfoByEmailAddress(registerInfoRequest.getEmailAddress());
-            if (userInfo == null) {
-                userInfo = userInfoRepo.getUserInfoByTelephoneNumber(registerInfoRequest.getTelephoneNumber());
                 if (userInfo == null) {
                     userInfo = new UserInfo();
 
@@ -44,10 +42,8 @@ public class AuthenticationManager {
                     return "ok";
 
 
-                }
+
             } else return "420";
-        } else {
-            return "421";
         }
         return "422";
     }
@@ -56,15 +52,8 @@ public class AuthenticationManager {
         UserInfo userInfo = userInfoRepo.getUserInfoByUserName(loginInfoRequest.getUserName());
         if (userInfo == null) {
             userInfo = userInfoRepo.getUserInfoByEmailAddress(loginInfoRequest.getUserName());
-            if (userInfo == null) {
-                userInfo = userInfoRepo.getUserInfoByTelephoneNumber(loginInfoRequest.getUserName());
                 if (userInfo == null) {
                     return null;
-                } else {
-                    if (userInfo.getPassword().equals(loginInfoRequest.getPassword())) {
-                        return userInfo;
-                    }
-                }
             } else {
                 if (userInfo.getPassword().equals(loginInfoRequest.getPassword())) {
                     return userInfo;
