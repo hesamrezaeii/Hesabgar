@@ -94,33 +94,23 @@ public class AuthenticationManager {
         if (newFriend == null) {
             newFriend = userInfoRepo.getUserInfoByEmailAddress(addFriendRequest.getFriendsAuth());
             if (newFriend == null) {
-                newFriend = userInfoRepo.getUserInfoByTelephoneNumber(addFriendRequest.getFriendsAuth());
-                if (newFriend == null) {
-                    return null;
-                } else {
-                    List<String> newFriendFriendsList = newFriend.getFriendsList();
-                    if (newFriendFriendsList == null) {
-                        newFriendFriendsList = new ArrayList<>();
-                    }
-                    newFriendFriendsList.add(userInfo.getId());
-                    newFriend.setFriendsList(newFriendFriendsList);
-                    userInfoRepo.save(newFriend);
-
-                    friends.add(newFriend.getId());
-                    userInfo.setFriendsList(friends);
-                    return userInfoRepo.save(userInfo);
-                }
+                return null;
             } else {
-
                 List<String> newFriendFriendsList = newFriend.getFriendsList();
                 if (newFriendFriendsList == null) {
                     newFriendFriendsList = new ArrayList<>();
                 }
-                newFriendFriendsList.add(userInfo.getId());
+                for (String people : newFriendFriendsList) {
+                    if(people.equals(userInfo.getUserName())){
+                        return null;
+                    }
+                }
+
+                newFriendFriendsList.add(userInfo.getUserName());
                 newFriend.setFriendsList(newFriendFriendsList);
                 userInfoRepo.save(newFriend);
 
-                friends.add(newFriend.getId());
+                friends.add(newFriend.getUserName());
                 userInfo.setFriendsList(friends);
                 return userInfoRepo.save(userInfo);
             }
@@ -130,12 +120,19 @@ public class AuthenticationManager {
             if (newFriendFriendsList == null) {
                 newFriendFriendsList = new ArrayList<>();
             }
-            newFriendFriendsList.add(userInfo.getId());
+
+            for (String people : newFriendFriendsList) {
+                if(people.equals(userInfo.getUserName())){
+                    return null;
+                }
+            }
+
+            newFriendFriendsList.add(userInfo.getUserName());
             newFriend.setFriendsList(newFriendFriendsList);
             userInfoRepo.save(newFriend);
 
 
-            friends.add(newFriend.getId());
+            friends.add(newFriend.getUserName());
             userInfo.setFriendsList(friends);
             return userInfoRepo.save(userInfo);
         }
