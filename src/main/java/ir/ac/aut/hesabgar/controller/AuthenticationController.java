@@ -22,28 +22,43 @@ public class AuthenticationController {
     private UserInfoRepo userInfoRepo;
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterInfoRequest registerInfoRequest) {
-        return authenticationManager.register(registerInfoRequest);
+    public ResponseEntity<Object> register(@RequestBody RegisterInfoRequest registerInfoRequest) {
+        String status = authenticationManager.register(registerInfoRequest);
+        if(!status.equals("ok")){
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/login")
-    public UserInfo login(@RequestBody LoginInfoRequest loginInfoRequest) {
-        return authenticationManager.login(loginInfoRequest);
+    public ResponseEntity<Object> login(@RequestBody LoginInfoRequest loginInfoRequest) {
+        UserInfo userInfo =  authenticationManager.login(loginInfoRequest);
+        if(userInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/changeProfile")
-    public UserInfo changeProfileInfo(@RequestBody ChangeProfileRequest changeProfileRequest) {
-        return authenticationManager.changeProfile(changeProfileRequest);
+    public ResponseEntity<Object> changeProfileInfo(@RequestBody ChangeProfileRequest changeProfileRequest) {
+        UserInfo userInfo = authenticationManager.changeProfile(changeProfileRequest);
+        if(userInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/addFriend")
-    public UserInfo addFriend(@RequestBody AddFriendRequest addFriendRequest) {
-        return authenticationManager.addFriend(addFriendRequest);
+    public ResponseEntity<Object> addFriend(@RequestBody AddFriendRequest addFriendRequest) {
+        UserInfo userInfo = authenticationManager.addFriend(addFriendRequest);
+        if(userInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/addBankAccount")
-    public UserInfo addingBankAccount(@RequestBody AddingBankAccountRequest addingBankAccountRequest) {
-        return authenticationManager.addingBankAccount(addingBankAccountRequest);
+    public ResponseEntity<Object> addingBankAccount(@RequestBody AddingBankAccountRequest addingBankAccountRequest) {
+        UserInfo userInfo = authenticationManager.addingBankAccount(addingBankAccountRequest);
+        if(userInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/getUser")
