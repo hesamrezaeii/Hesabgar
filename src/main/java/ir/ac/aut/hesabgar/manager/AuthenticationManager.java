@@ -140,12 +140,15 @@ public class AuthenticationManager {
 
     public UserInfo addingBankAccount(AddingBankAccountRequest addingBankAccountRequest) {
         UserInfo userInfo = userInfoRepo.getUserInfoById(addingBankAccountRequest.getUserId());
-        List<BankAccount> bankAccounts = userInfo.getBankAccounts();
-        if (bankAccounts == null) {
-            bankAccounts = new ArrayList<>();
-        }
-        bankAccounts.add(new BankAccount(addingBankAccountRequest.getBankName(), addingBankAccountRequest.getBankAccountNumber(), addingBankAccountRequest.getAtmCardNumber()));
-        userInfo.setBankAccounts(bankAccounts);
+        BankAccount bankAccount = new BankAccount(addingBankAccountRequest.getBankName(), addingBankAccountRequest.getBankAccountNumber(), addingBankAccountRequest.getAtmCardNumber());
+        userInfo.setBankAccount(bankAccount);
+
+        return userInfoRepo.save(userInfo);
+    }
+    public UserInfo deleteBankAccount(DeletingBanckAccountRequest deletingBanckAccountRequest) {
+        UserInfo userInfo = userInfoRepo.getUserInfoById(deletingBanckAccountRequest.getUserId());
+
+        userInfo.setBankAccount(null);
 
         return userInfoRepo.save(userInfo);
     }

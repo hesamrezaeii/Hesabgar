@@ -64,6 +64,15 @@ public class AuthenticationController {
         } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
+    @PostMapping("/deleteBankAccount")
+    public ResponseEntity<Object> deleteBankAccount(@RequestBody DeletingBanckAccountRequest deletingBanckAccountRequest) {
+        UserInfo userInfo = authenticationManager.deleteBankAccount(deletingBanckAccountRequest);
+        if(userInfo != null){
+            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+
+        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
     @PostMapping("/getUser")
     public ResponseEntity<Object> getUser(@RequestBody GetUserRequest getUserRequest) {
        UserInfo userInfo =  userInfoRepo.getUserInfoById(getUserRequest.getUserId());
