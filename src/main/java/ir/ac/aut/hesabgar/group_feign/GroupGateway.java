@@ -34,4 +34,7 @@ public interface GroupGateway {
      @RequestMapping(method = RequestMethod.POST, path = "/addInvoice")
      ResponseEntity<Object> getPaymentTerm(AddingInvoiceRequest addingInvoiceRequest);
 
+     @RequestMapping(method = RequestMethod.POST, path = "/payInvoice")
+     ResponseEntity<Object> payingInvoice(PayingInvoiceRequest payingInvoiceRequest);
+
 }

@@ -72,6 +72,11 @@ public class GroupGatewayController {
        return groupGateway.getPaymentTerm(addingInvoiceRequest);
 
     }
+    @PostMapping("/payInvoice")
+    public ResponseEntity<Object> getPaymentTerm(@RequestBody PayingInvoiceRequest payingInvoiceRequest) {
+        return groupGateway.payingInvoice(payingInvoiceRequest);
+
+    }
 
 
 }
