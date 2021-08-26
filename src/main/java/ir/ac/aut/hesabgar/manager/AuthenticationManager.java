@@ -127,12 +127,12 @@ public class AuthenticationManager {
                 }
             }
 
-            newFriendFriendsList.add(userInfo.getUserName());
+            newFriendFriendsList.add(userInfo.getId());
             newFriend.setFriendsList(newFriendFriendsList);
             userInfoRepo.save(newFriend);
 
 
-            friends.add(newFriend.getUserName());
+            friends.add(newFriend.getId());
             userInfo.setFriendsList(friends);
             return userInfoRepo.save(userInfo);
         }
