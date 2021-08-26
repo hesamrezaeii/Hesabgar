@@ -9,7 +9,7 @@ public class AddingInvoiceEvent {
     private String description;
     private List<String> eventMembers;
     private String invoiceAdmin;
-    private Map<String, Integer> eventBalance;
+    private Map<String, Float> eventBalance;
     private Date creationDate;
 
     public String getDescription() {
@@ -44,11 +44,11 @@ public class AddingInvoiceEvent {
         this.invoiceAdmin = invoiceAdmin;
     }
 
-    public Map<String, Integer> getEventBalance() {
+    public Map<String, Float> getEventBalance() {
         return eventBalance;
     }
 
-    public void setEventBalance(Map<String, Integer> eventBalance) {
+    public void setEventBalance(Map<String, Float> eventBalance) {
         this.eventBalance = eventBalance;
     }
 

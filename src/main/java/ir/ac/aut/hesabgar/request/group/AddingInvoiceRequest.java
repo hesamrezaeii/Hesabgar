@@ -7,8 +7,8 @@ public class AddingInvoiceRequest {
     private String groupId;
     private String topic;
     private String description;
-    private int totalPaidValue;
-    private Map<String, Integer> groupShare;
+    private float totalPaidValue;
+    private Map<String, Float> groupShare;
 
 
     public String getUserId() {
@@ -42,19 +42,19 @@ public class AddingInvoiceRequest {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Map<String, Integer> getGroupShare() {
+    public Map<String, Float> getGroupShare() {
         return groupShare;
     }
 
-    public void setGroupShare(Map<String, Integer> groupShare) {
+    public void setGroupShare(Map<String, Float> groupShare) {
         this.groupShare = groupShare;
     }
 
-    public int getTotalPaidValue() {
+    public float getTotalPaidValue() {
         return totalPaidValue;
     }
 
-    public void setTotalPaidValue(int totalPaidValue) {
+    public void setTotalPaidValue(Float totalPaidValue) {
         this.totalPaidValue = totalPaidValue;
     }
 }

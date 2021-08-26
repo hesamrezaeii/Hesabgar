@@ -5,7 +5,7 @@ import java.util.Date;
 public class PayingInvoiceEvent {
     private String Debtor;
     private String Creditor;
-    private int debtAmount;
+    private float debtAmount;
     private Date creationDate;
 
     public String getDebtor() {
@@ -24,11 +24,11 @@ public class PayingInvoiceEvent {
         Creditor = creditor;
     }
 
-    public int getDebtAmount() {
+    public float getDebtAmount() {
         return debtAmount;
     }
 
-    public void setDebtAmount(int debtAmount) {
+    public void setDebtAmount(float debtAmount) {
         this.debtAmount = debtAmount;
     }
 

@@ -55,7 +55,7 @@ public class GroupInfo {
     private List<InvoiceAdminInvAndDelEvent> invoiceAdminInvAndDelEvents;
 
     @Field(GroupBalance_Col)
-    private Map<String, Integer> groupBalance;
+    private Map<String, Float> groupBalance;
 
     @Field(CreationDate_Col)
     @CreatedDate
@@ -109,11 +109,11 @@ public class GroupInfo {
         this.payingInvoiceEvents = payingInvoiceEvents;
     }
 
-    public Map<String, Integer> getGroupBalance() {
+    public Map<String, Float> getGroupBalance() {
         return groupBalance;
     }
 
-    public void setGroupBalance(Map<String, Integer> groupBalance) {
+    public void setGroupBalance(Map<String, Float> groupBalance) {
         this.groupBalance = groupBalance;
     }
 

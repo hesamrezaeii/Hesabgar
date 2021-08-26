@@ -36,8 +36,8 @@ public class GroupManager {
         groupInfo.setCreationDate(new Date());
         groupInfo.setGroupName(creatingGroupInfoRequest.getGroupName());
 
-        Map<String, Integer> groupBalance = new HashMap<String, Integer>();
-        groupBalance.put(adminInfo.getId(), 0);
+        Map<String, Float> groupBalance = new HashMap<String, Float>();
+        groupBalance.put(adminInfo.getId(), (float) 0);
         groupInfo.setGroupBalance(groupBalance);
 
         List<GroupMember> groupMembers = new ArrayList<>();
@@ -91,8 +91,8 @@ public class GroupManager {
             memberInvAndDelEvents.add(new MemberInvAndDelEvent(newInvUser.getUserName(), true, new Date()));
             groupInfo.setMemberInvAndDelEvents(memberInvAndDelEvents);
 
-            Map<String, Integer> groupBalance = groupInfo.getGroupBalance();
-            groupBalance.put(newInvUser.getId(), 0);
+            Map<String, Float> groupBalance = groupInfo.getGroupBalance();
+            groupBalance.put(newInvUser.getId(),  (float) 0);
             groupInfo.setGroupBalance(groupBalance);
 
             List<JoinedGroupInfo> newUserJoinedGroupInfos = newInvUser.getJoinedGroupList();
@@ -115,7 +115,7 @@ public class GroupManager {
         boolean deletable = false;
         if (adminUser.getId().equals(groupInfo.getAdmin())) {
             deletable = true;
-            Map<String, Integer> groupBalance = groupInfo.getGroupBalance();
+            Map<String, Float> groupBalance = groupInfo.getGroupBalance();
             for (String member : groupBalance.keySet()) {
                 groupUsers.add(member);
                 if (groupBalance.get(member) != 0) {
@@ -195,8 +195,8 @@ public class GroupManager {
         UserInfo adminUser = userInfoRepo.getUserInfoById(deletingGroupMemberRequest.getAdminId());
         UserInfo toBeDeletedUser = userInfoRepo.getUserInfoById(deletingGroupMemberRequest.getUserId());
         if (adminUser.getId().equals(groupInfo.getAdmin())) {
-            Map<String, Integer> groupBalance = groupInfo.getGroupBalance();
-            Map<String, Integer> newGroupBalance = new HashMap<>();
+            Map<String, Float> groupBalance = groupInfo.getGroupBalance();
+            Map<String, Float> newGroupBalance = new HashMap<>();
             if (groupBalance.get(toBeDeletedUser.getId()).equals(0)) {
                 for (String member : groupBalance.keySet()) {
                     if (!member.equals(toBeDeletedUser.getUserName())) {
