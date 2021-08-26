@@ -122,7 +122,7 @@ public class AuthenticationManager {
             }
 
             for (String people : newFriendFriendsList) {
-                if(people.equals(userInfo.getUserName())){
+                if(people.equals(userInfo.getId())){
                     return null;
                 }
             }
