@@ -77,6 +77,11 @@ public class GroupGatewayController {
         return groupGateway.payingInvoice(payingInvoiceRequest);
 
     }
+    @PostMapping("/showDebt")
+    public ResponseEntity<Object> debtorInfo(@RequestBody ShowDebtRequest showDebtRequest) {
+        return groupGateway.debtorInfo(showDebtRequest);
+
+    }
 
 
 }
