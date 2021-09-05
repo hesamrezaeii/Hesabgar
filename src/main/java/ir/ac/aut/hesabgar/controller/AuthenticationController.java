@@ -114,7 +114,7 @@ public class AuthenticationController {
       if(adminInfo.isAdmin()){
           UserInfo userInfo = userInfoRepo.getUserInfoById(userBanRequest.getUserId());
           userInfo.setActive(userBanRequest.isBan());
-
+          userInfoRepo.save(userInfo);
       }
     }
 
