@@ -26,6 +26,7 @@ public class AuthenticationManager {
                     userInfo = new UserInfo();
 
                     userInfo.setAdmin(false);
+                    userInfo.setActive(true);
                     userInfo.setName(registerInfoRequest.getName());
                     userInfo.setLastName(registerInfoRequest.getLastName());
                     userInfo.setEmailAddress(registerInfoRequest.getEmailAddress());

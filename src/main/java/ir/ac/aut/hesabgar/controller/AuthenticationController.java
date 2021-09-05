@@ -24,7 +24,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody RegisterInfoRequest registerInfoRequest) {
         String status = authenticationManager.register(registerInfoRequest);
-         if(status.equals("ok")){
+        if(status.equals("ok")){
             return ResponseEntity.status(HttpStatus.OK).body(null);
          } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
@@ -34,43 +34,58 @@ public class AuthenticationController {
         UserInfo userInfo =  authenticationManager.login(loginInfoRequest);
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/changeProfile")
     public ResponseEntity<Object> changeProfileInfo(@RequestBody ChangeProfileRequest changeProfileRequest) {
         UserInfo userInfo = authenticationManager.changeProfile(changeProfileRequest);
+        if (!userInfo.isActive()){
+            return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        }
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-
-        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/addFriend")
     public ResponseEntity<Object> addFriend(@RequestBody AddFriendRequest addFriendRequest) {
         UserInfo userInfo = authenticationManager.addFriend(addFriendRequest);
+        if (!userInfo.isActive()){
+            return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        }
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
 
-        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/addBankAccount")
     public ResponseEntity<Object> addingBankAccount(@RequestBody AddingBankAccountRequest addingBankAccountRequest) {
         UserInfo userInfo = authenticationManager.addingBankAccount(addingBankAccountRequest);
+        if (!userInfo.isActive()){
+            return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        }
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
 
-        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/deleteBankAccount")
     public ResponseEntity<Object> deleteBankAccount(@RequestBody DeletingBanckAccountRequest deletingBanckAccountRequest) {
         UserInfo userInfo = authenticationManager.deleteBankAccount(deletingBanckAccountRequest);
+        if (!userInfo.isActive()){
+            return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        }
         if(userInfo != null){
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-
-        } return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/getUser")
@@ -91,6 +106,16 @@ public class AuthenticationController {
     @DeleteMapping("/deleteAll")
     public void deleteAll() {
         userInfoRepo.deleteAll();
+    }
+
+    @PostMapping("/ban")
+    public void ban(UserBanRequest userBanRequest) {
+      UserInfo adminInfo = userInfoRepo.getUserInfoById(userBanRequest.getAdminId());
+      if(adminInfo.isAdmin()){
+          UserInfo userInfo = userInfoRepo.getUserInfoById(userBanRequest.getUserId());
+          userInfo.setActive(userBanRequest.isBan());
+
+      }
     }
 
 }

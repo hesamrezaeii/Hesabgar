@@ -18,6 +18,7 @@ public class UserInfo {
 
     public final static String Id_Col = "_id";
     public final static String IsHesabgarAdmin_Col = "role";
+    public final static String IsActive_Col = "active";
     public final static String UserName_Col = "userName";
     public final static String Password_Col = "password";
     public final static String Email_Col = "emailAddress";
@@ -42,12 +43,15 @@ public class UserInfo {
     @Field(IsHesabgarAdmin_Col)
     private boolean isAdmin;
 
+    @Field(Password_Col)
+    private boolean isActive;
+
     @Field(UserName_Col)
     @Indexed(unique = true)
     @NonNull
     private String userName;
 
-    @Field(Password_Col)
+    @Field(IsActive_Col)
     private String password;
 
     @Field(Email_Col)
@@ -107,6 +111,14 @@ public class UserInfo {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public String getUserName() {
