@@ -31,61 +31,66 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginInfoRequest loginInfoRequest) {
-        UserInfo userInfo =  authenticationManager.login(loginInfoRequest);
-        if(userInfo != null){
+        UserInfo userInfo = authenticationManager.login(loginInfoRequest);
+        if (userInfo != null) {
             return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/changeProfile")
     public ResponseEntity<Object> changeProfileInfo(@RequestBody ChangeProfileRequest changeProfileRequest) {
         UserInfo userInfo = authenticationManager.changeProfile(changeProfileRequest);
-        if (!userInfo.isActive()){
+        if (!userInfo.isActive()) {
             return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        } else {
+            if (userInfo != null) {
+                return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        if(userInfo != null){
-            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/addFriend")
     public ResponseEntity<Object> addFriend(@RequestBody AddFriendRequest addFriendRequest) {
         UserInfo userInfo = authenticationManager.addFriend(addFriendRequest);
-        if (!userInfo.isActive()){
+        if (!userInfo.isActive()) {
             return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
-        }
-        if(userInfo != null){
-            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+        } else {
+            if (userInfo != null) {
+                return ResponseEntity.status(HttpStatus.OK).body(userInfo);
 
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/addBankAccount")
     public ResponseEntity<Object> addingBankAccount(@RequestBody AddingBankAccountRequest addingBankAccountRequest) {
         UserInfo userInfo = authenticationManager.addingBankAccount(addingBankAccountRequest);
-        if (!userInfo.isActive()){
+        if (!userInfo.isActive()) {
             return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
-        }
-        if(userInfo != null){
-            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+        } else {
+            if (userInfo != null) {
+                return ResponseEntity.status(HttpStatus.OK).body(userInfo);
 
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/deleteBankAccount")
     public ResponseEntity<Object> deleteBankAccount(@RequestBody DeletingBanckAccountRequest deletingBanckAccountRequest) {
         UserInfo userInfo = authenticationManager.deleteBankAccount(deletingBanckAccountRequest);
-        if (!userInfo.isActive()){
+        if (!userInfo.isActive()) {
             return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        } else {
+            if (userInfo != null) {
+                return ResponseEntity.status(HttpStatus.OK).body(userInfo);
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        if(userInfo != null){
-            return ResponseEntity.status(HttpStatus.OK).body(userInfo);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
     @PostMapping("/getUser")
