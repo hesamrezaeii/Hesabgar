@@ -2,6 +2,7 @@ package ir.ac.aut.hesabgar.manager;
 
 import ir.ac.aut.hesabgar.domain.data.BankAccount;
 import ir.ac.aut.hesabgar.domain.data.JoinedGroupInfo;
+import ir.ac.aut.hesabgar.domain.data.UserReportStatus;
 import ir.ac.aut.hesabgar.domain.document.UserInfo;
 import ir.ac.aut.hesabgar.domain.repo.UserInfoRepo;
 import ir.ac.aut.hesabgar.request.authentication.*;
@@ -36,7 +37,13 @@ public class AuthenticationManager {
                     List<JoinedGroupInfo> joinedGroupInfos = new ArrayList<>();
                     userInfo.setJoinedGroupList(joinedGroupInfos);
                     userInfo.setOverallBalance(0);
+                    UserReportStatus userReportStatus = new UserReportStatus();
+                    userReportStatus.setReportCount(0);
+                    List<String> reportDescription = new ArrayList<>();
+                    userReportStatus.setReportDescription(reportDescription);
+                    userInfo.setUserReportStatus(userReportStatus);
                     userInfo.setCreationDate(new Date());
+
 
                     userInfoRepo.save(userInfo);
 

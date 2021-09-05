@@ -3,6 +3,7 @@ package ir.ac.aut.hesabgar.domain.document;
 import com.mongodb.lang.NonNull;
 import ir.ac.aut.hesabgar.domain.data.BankAccount;
 import ir.ac.aut.hesabgar.domain.data.JoinedGroupInfo;
+import ir.ac.aut.hesabgar.domain.data.UserReportStatus;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -27,6 +28,7 @@ public class UserInfo {
     public final static String LastName_Col = "lastName";
     public final static String TelephoneNumber_Col = "telephoneNumber";
     public final static String BankAccounts_Col = "bankAccount";
+    public final static String ReportList_Col = "reportList";
 
 
     public final static String JoinedGroupList_Col = "joinedGroupList";
@@ -61,6 +63,9 @@ public class UserInfo {
 
     @Field(BankAccounts_Col)
     private BankAccount bankAccount;
+
+    @Field(ReportList_Col)
+    private UserReportStatus userReportStatus;
 
     @Field(Name_Col)
     private String name;
@@ -115,6 +120,14 @@ public class UserInfo {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    public UserReportStatus getUserReportStatus() {
+        return userReportStatus;
+    }
+
+    public void setUserReportStatus(UserReportStatus userReportStatus) {
+        this.userReportStatus = userReportStatus;
     }
 
     public void setActive(boolean active) {
