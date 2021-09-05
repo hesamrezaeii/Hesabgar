@@ -109,7 +109,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/ban")
-    public void ban(UserBanRequest userBanRequest) {
+    public void ban(@RequestBody UserBanRequest userBanRequest) {
       UserInfo adminInfo = userInfoRepo.getUserInfoById(userBanRequest.getAdminId());
       if(adminInfo.isAdmin()){
           UserInfo userInfo = userInfoRepo.getUserInfoById(userBanRequest.getUserId());
