@@ -136,7 +136,7 @@ public class AuthenticationController {
             UserInfo reportedUser = userInfoRepo.getUserInfoById(userReportRequest.getReportedUserId());
             UserReportStatus userReportStatus = new UserReportStatus();
             int count = reportedUser.getUserReportStatus().getReportCount() + 1;
-            String desc = userReportRequest.getUserId() + ":" + "\n" + userReportRequest.getDesc();
+            String desc = userReportRequest.getUserId() + ":" + " <br> " + userReportRequest.getDesc();
             List<String> repDescriptions = reportedUser.getUserReportStatus().getReportDescription();
             repDescriptions.add(desc);
             userReportStatus.setReportDescription(repDescriptions);
