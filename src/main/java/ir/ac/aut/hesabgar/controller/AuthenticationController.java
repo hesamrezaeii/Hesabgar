@@ -41,10 +41,11 @@ public class AuthenticationController {
 
     @PostMapping("/changeProfile")
     public ResponseEntity<Object> changeProfileInfo(@RequestBody ChangeProfileRequest changeProfileRequest) {
-        UserInfo userInfo = authenticationManager.changeProfile(changeProfileRequest);
-        if (!userInfo.isActive()) {
-            return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        UserInfo user = userInfoRepo.getUserInfoById(changeProfileRequest.getUserId());
+        if (!user.isActive()) {
+            return ResponseEntity.status(HttpStatus.LOCKED).body(null);
         } else {
+            UserInfo userInfo = authenticationManager.changeProfile(changeProfileRequest);
             if (userInfo != null) {
                 return ResponseEntity.status(HttpStatus.OK).body(userInfo);
             }
@@ -54,10 +55,11 @@ public class AuthenticationController {
 
     @PostMapping("/addFriend")
     public ResponseEntity<Object> addFriend(@RequestBody AddFriendRequest addFriendRequest) {
-        UserInfo userInfo = authenticationManager.addFriend(addFriendRequest);
-        if (!userInfo.isActive()) {
-            return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
-        } else {
+        UserInfo user = userInfoRepo.getUserInfoById(addFriendRequest.getUserId());
+        if (!user.isActive()) {
+            return ResponseEntity.status(HttpStatus.LOCKED).body(null);
+        }else {
+            UserInfo userInfo = authenticationManager.addFriend(addFriendRequest);
             if (userInfo != null) {
                 return ResponseEntity.status(HttpStatus.OK).body(userInfo);
 
@@ -68,10 +70,12 @@ public class AuthenticationController {
 
     @PostMapping("/addBankAccount")
     public ResponseEntity<Object> addingBankAccount(@RequestBody AddingBankAccountRequest addingBankAccountRequest) {
-        UserInfo userInfo = authenticationManager.addingBankAccount(addingBankAccountRequest);
-        if (!userInfo.isActive()) {
-            return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        UserInfo user = userInfoRepo.getUserInfoById(addingBankAccountRequest.getUserId());
+        if (!user.isActive()) {
+            return ResponseEntity.status(HttpStatus.LOCKED).body(null);
         } else {
+            UserInfo userInfo = authenticationManager.addingBankAccount(addingBankAccountRequest);
+
             if (userInfo != null) {
                 return ResponseEntity.status(HttpStatus.OK).body(userInfo);
 
@@ -82,10 +86,12 @@ public class AuthenticationController {
 
     @PostMapping("/deleteBankAccount")
     public ResponseEntity<Object> deleteBankAccount(@RequestBody DeletingBanckAccountRequest deletingBanckAccountRequest) {
-        UserInfo userInfo = authenticationManager.deleteBankAccount(deletingBanckAccountRequest);
-        if (!userInfo.isActive()) {
-            return ResponseEntity.status(HttpStatus.LOCKED).body(userInfo);
+        UserInfo user = userInfoRepo.getUserInfoById(deletingBanckAccountRequest.getUserId());
+        if (!user.isActive()) {
+            return ResponseEntity.status(HttpStatus.LOCKED).body(null);
         } else {
+            UserInfo userInfo = authenticationManager.deleteBankAccount(deletingBanckAccountRequest);
+
             if (userInfo != null) {
                 return ResponseEntity.status(HttpStatus.OK).body(userInfo);
             }
