@@ -1,5 +1,6 @@
 package ir.ac.aut.hesabgar.controller;
 
+import ir.ac.aut.hesabgar.domain.data.UserReportStatus;
 import ir.ac.aut.hesabgar.domain.document.UserInfo;
 import ir.ac.aut.hesabgar.domain.repo.UserInfoRepo;
 import ir.ac.aut.hesabgar.manager.AuthenticationManager;
@@ -127,6 +128,23 @@ public class AuthenticationController {
           userInfo.setActive(userBanRequest.isBan());
           userInfoRepo.save(userInfo);
       }
+    }
+    @PostMapping("/reportUser")
+    public void report(@RequestBody UserReportRequest userReportRequest) {
+        UserInfo user = userInfoRepo.getUserInfoById(userReportRequest.getUserId());
+        if(user.isActive()){
+            UserInfo reportedUser = userInfoRepo.getUserInfoById(userReportRequest.getReportedUserId());
+            UserReportStatus userReportStatus = new UserReportStatus();
+            int count = reportedUser.getUserReportStatus().getReportCount() + 1;
+            String desc = userReportRequest.getUserId() + ":" + "\n" + userReportRequest.getDesc();
+            List<String> repDescriptions = reportedUser.getUserReportStatus().getReportDescription();
+            repDescriptions.add(desc);
+            userReportStatus.setReportDescription(repDescriptions);
+            userReportStatus.setReportCount(count);
+            reportedUser.setUserReportStatus(userReportStatus);
+
+            userInfoRepo.save(reportedUser);
+        }
     }
 
 }
