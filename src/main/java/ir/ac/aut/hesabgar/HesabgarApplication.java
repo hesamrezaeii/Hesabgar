@@ -5,6 +5,7 @@ import ir.ac.aut.hesabgar.domain.data.UserReportStatus;
 import ir.ac.aut.hesabgar.domain.document.UserInfo;
 import ir.ac.aut.hesabgar.domain.repo.UserInfoRepo;
 import ir.ac.aut.hesabgar.group_feign.GroupGateway;
+import ir.ac.aut.hesabgar.helper.PasswordDecoderHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +23,8 @@ import java.util.List;
 public class HesabgarApplication implements CommandLineRunner {
     @Autowired
     private UserInfoRepo userInfoRepo;
+    @Autowired
+    private PasswordDecoderHelper passwordDecoderHelper;
 
     public static void main(String[] args) {
         SpringApplication.run(HesabgarApplication.class, args);
@@ -38,7 +41,7 @@ public class HesabgarApplication implements CommandLineRunner {
             userInfo.setName("admin");
             userInfo.setLastName("admin");
             userInfo.setEmailAddress("admin@hesabgar.com");
-            userInfo.setPassword("adminadmin");
+            userInfo.setPassword(passwordDecoderHelper.digest("adminadmin"));
             userInfo.setUserName("ADMIN");
             userInfo.setTelephoneNumber("09353368575");
             List<JoinedGroupInfo> joinedGroupInfos = new ArrayList<>();

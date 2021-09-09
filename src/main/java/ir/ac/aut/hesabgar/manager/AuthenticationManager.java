@@ -5,6 +5,7 @@ import ir.ac.aut.hesabgar.domain.data.JoinedGroupInfo;
 import ir.ac.aut.hesabgar.domain.data.UserReportStatus;
 import ir.ac.aut.hesabgar.domain.document.UserInfo;
 import ir.ac.aut.hesabgar.domain.repo.UserInfoRepo;
+import ir.ac.aut.hesabgar.helper.PasswordDecoderHelper;
 import ir.ac.aut.hesabgar.request.authentication.*;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import java.util.List;
 public class AuthenticationManager {
     @Autowired
     private UserInfoRepo userInfoRepo;
+    @Autowired
+    private PasswordDecoderHelper passwordDecoderHelper;
 
     public String register(RegisterInfoRequest registerInfoRequest) {
         UserInfo userInfo = userInfoRepo.getUserInfoByUserName(registerInfoRequest.getUserName());
@@ -31,7 +34,7 @@ public class AuthenticationManager {
                     userInfo.setName(registerInfoRequest.getName());
                     userInfo.setLastName(registerInfoRequest.getLastName());
                     userInfo.setEmailAddress(registerInfoRequest.getEmailAddress());
-                    userInfo.setPassword(registerInfoRequest.getPassword());
+                    userInfo.setPassword(passwordDecoderHelper.digest(registerInfoRequest.getPassword()));
                     userInfo.setUserName(registerInfoRequest.getUserName());
                     userInfo.setTelephoneNumber(registerInfoRequest.getTelephoneNumber());
                     List<JoinedGroupInfo> joinedGroupInfos = new ArrayList<>();
@@ -60,15 +63,16 @@ public class AuthenticationManager {
         UserInfo userInfo = userInfoRepo.getUserInfoByUserName(loginInfoRequest.getUserName());
         if (userInfo == null) {
             userInfo = userInfoRepo.getUserInfoByEmailAddress(loginInfoRequest.getUserName());
+
                 if (userInfo == null) {
                     return null;
             } else {
-                if (userInfo.getPassword().equals(loginInfoRequest.getPassword())) {
+                if (passwordDecoderHelper.isEqual(loginInfoRequest.getPassword(),userInfo.getPassword())) {
                     return userInfo;
                 }
             }
         } else {
-            if (userInfo.getPassword().equals(loginInfoRequest.getPassword())) {
+            if (passwordDecoderHelper.isEqual(loginInfoRequest.getPassword(),userInfo.getPassword())) {
                 return userInfo;
             }
         }
