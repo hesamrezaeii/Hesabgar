@@ -1,5 +1,7 @@
 package ir.ac.aut.hesabgar.helper;
 
+import ir.ac.aut.hesabgar.domain.repo.UserInfoRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.Charset;
@@ -11,9 +13,10 @@ import java.security.NoSuchAlgorithmException;
 public class PasswordDecoderHelper {
     private static final Charset UTF_8 = StandardCharsets.UTF_8;
 
-    public String digest(String password) {
+    public String digest(String userName,String password) {
         MessageDigest md;
-        byte[] input = password.getBytes(UTF_8);
+        String toBeHashed = userName + password;
+        byte[] input = toBeHashed.getBytes(UTF_8);
         try {
             md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
@@ -31,8 +34,8 @@ public class PasswordDecoderHelper {
         return sb.toString();
     }
 
-    public boolean isEqual(String input, String password) {
-        return digest(input).equals(password);
+    public boolean isEqual(String userName,String input, String password) {
+        return digest(userName, input).equals(password);
     }
 
 }

@@ -34,7 +34,7 @@ public class AuthenticationManager {
                     userInfo.setName(registerInfoRequest.getName());
                     userInfo.setLastName(registerInfoRequest.getLastName());
                     userInfo.setEmailAddress(registerInfoRequest.getEmailAddress());
-                    userInfo.setPassword(passwordDecoderHelper.digest(registerInfoRequest.getPassword()));
+                    userInfo.setPassword(passwordDecoderHelper.digest(registerInfoRequest.getUserName(),registerInfoRequest.getPassword()));
                     userInfo.setUserName(registerInfoRequest.getUserName());
                     userInfo.setTelephoneNumber(registerInfoRequest.getTelephoneNumber());
                     List<JoinedGroupInfo> joinedGroupInfos = new ArrayList<>();
@@ -67,12 +67,12 @@ public class AuthenticationManager {
                 if (userInfo == null) {
                     return null;
             } else {
-                if (passwordDecoderHelper.isEqual(loginInfoRequest.getPassword(),userInfo.getPassword())) {
+                if (passwordDecoderHelper.isEqual(userInfo.getUserName(),loginInfoRequest.getPassword(),userInfo.getPassword())) {
                     return userInfo;
                 }
             }
         } else {
-            if (passwordDecoderHelper.isEqual(loginInfoRequest.getPassword(),userInfo.getPassword())) {
+            if (passwordDecoderHelper.isEqual(userInfo.getUserName(), loginInfoRequest.getPassword(),userInfo.getPassword())) {
                 return userInfo;
             }
         }

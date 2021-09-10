@@ -41,8 +41,8 @@ public class HesabgarApplication implements CommandLineRunner {
             userInfo.setName("admin");
             userInfo.setLastName("admin");
             userInfo.setEmailAddress("admin@hesabgar.com");
-            userInfo.setPassword(passwordDecoderHelper.digest("adminadmin"));
             userInfo.setUserName("ADMIN");
+            userInfo.setPassword(passwordDecoderHelper.digest("ADMIN","adminadmin"));
             userInfo.setTelephoneNumber("09353368575");
             List<JoinedGroupInfo> joinedGroupInfos = new ArrayList<>();
             userInfo.setJoinedGroupList(joinedGroupInfos);
