@@ -12,10 +12,11 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class PasswordDecoderHelper {
     private static final Charset UTF_8 = StandardCharsets.UTF_8;
+    private static final String secretSign = "z!Qt9zgPq_Fk4nsG9Q+J";
 
     public String digest(String userName,String password) {
         MessageDigest md;
-        String toBeHashed = userName + password;
+        String toBeHashed = userName + secretSign +  password;
         byte[] input = toBeHashed.getBytes(UTF_8);
         try {
             md = MessageDigest.getInstance("MD5");
